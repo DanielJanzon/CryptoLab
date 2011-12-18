@@ -55,8 +55,8 @@ encrypt [order, generator, pub_key, message] = do
     let make_less x p = if x < p then x else make_less (div x 2) p
     let tmp = make_less rand (read order)
     -- Finally we can generate the ElGamal cipher
-    let (c1, c2) = EG.encrypt group msg g tmp pub
-    putStrLn ((show c1) ++ " " ++ (show c2) ++ " (" ++ (show tmp) ++ ")")
+    let (CG.Element c1, CG.Element c2) = EG.encrypt group msg g tmp pub
+    putStrLn ((show c1) ++ " " ++ (show c2))
 
 
 -- Encrypt a message (an Integer) less than the order of the
