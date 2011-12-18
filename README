@@ -1,0 +1,4 @@
+This project is some kind of study of haskell and cryptography.
+The goal is to make a program that can securely encrypt trafic
+on a TCP/IP based super-simple chat.
+
