@@ -89,5 +89,5 @@ next_primitive_root p q n = if primitive_q p q n then
                                 next_primitive_root p q (mod (n+1) p)
 
 -- Simple function to tell how many bits an integer has
-get_num_bits :: Integer -> Integer
+get_num_bits :: Integer -> Int
 get_num_bits n = if n == 0 then 0 else 1 + (get_num_bits (div n 2))
