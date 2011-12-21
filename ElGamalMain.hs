@@ -21,7 +21,7 @@ dispatch = [ ("init", Main.init),
 init :: [String] -> IO()
 init [num_bits] = do 
     contents <- BSL.readFile "/dev/urandom"
-    let start = (Enc.byte_str_to_odd (BSL.unpack contents) (div (read num_bits) 8))
+    let start = (Enc.words_to_int (BSL.unpack contents) (div (read num_bits) 8))
     let (p, q) = NT.next_pq_prime start
     let g = NT.next_primitive_root p q (div p 2)
     putStrLn ((show p) ++ " " ++ (show g))
@@ -32,7 +32,7 @@ keys :: [String] -> IO()
 keys [order, generator] = do
      contents <- BSL.readFile "/dev/urandom"
      let num_bits = NT.get_num_bits (read order)
-     let rand = (Enc.byte_str_to_odd (BSL.unpack contents) (div num_bits 8))
+     let rand = (Enc.words_to_int (BSL.unpack contents) (div num_bits 8))
      let make_less x p = if x < p then x else make_less (div x 2) p
      let priv_key = make_less rand (read order)
      let pub_key = NT.fast_pow (read generator) priv_key (read order)
@@ -51,7 +51,7 @@ encrypt [order, generator, pub_key, message] = do
     -- Now we need an ephemeral key tmp
     contents <- BSL.readFile "/dev/urandom"
     let num_bits = NT.get_num_bits (read order)
-    let rand = (Enc.byte_str_to_odd (BSL.unpack contents) (div num_bits 8))
+    let rand = (Enc.words_to_int (BSL.unpack contents) (div num_bits 8))
     let make_less x p = if x < p then x else make_less (div x 2) p
     let tmp = make_less rand (read order)
     -- Finally we can generate the ElGamal cipher

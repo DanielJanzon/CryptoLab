@@ -1,5 +1,5 @@
 module Encoder
-(byte_str_to_odd
+(words_to_int
 ,encode_number
 ,decode_number
 ) where
@@ -15,7 +15,6 @@ decode_number :: Integer -> [Word8]
 decode_number 0 = []
 decode_number n = (fromIntegral (mod n 256)) : decode_number (div n 256)
 
-oddify x = if x `mod` 2 == 1 then x else x+1
-
-byte_str_to_odd :: [Word8] -> Int -> Integer
-byte_str_to_odd str num_bytes = oddify (encode_number (take num_bytes str))
+-- Create an integer out of num_bytes elements from the list 'words'
+words_to_int :: [Word8] -> Int -> Integer
+words_to_int words num_bytes = encode_number $ take num_bytes words

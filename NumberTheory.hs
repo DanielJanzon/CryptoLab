@@ -62,16 +62,23 @@ rabin_miller n k = if witness n k then False else rabin_miller n (k-1)
   that if the starting point is random, the prime is random.
 -}
 
-next_prime n = let k = 100
+next_primeh n = let k = 100
                in if rabin_miller n k then n else next_prime (n+2)
+
+next_prime n = next_primeh $ oddify n
 
 {-
   We will also need the (quite common) primes of the form p=2q+1 where q
   is also prime.
 -}
-next_pq_prime start = let q = next_prime start
-                          p = 2*q+1
-                      in if rabin_miller p 100 then (p, q) else next_pq_prime (mod (q+2) p)
+next_pq_primeh start = let q = next_prime start
+                           p = 2*q+1
+                       in if rabin_miller p 100 then
+                           (p, q)
+                       else
+                           next_pq_primeh (mod (q+2) p)
+
+next_pq_prime start = next_pq_primeh $ oddify start
 
 -- If p,q are primes and p=2q+1, we have a nice condition that is only true
 -- if a number g is a generator for Z_p*. See exercise 1.33 in Hoffstein.
@@ -91,3 +98,7 @@ next_primitive_root p q n = if primitive_q p q n then
 -- Simple function to tell how many bits an integer has
 get_num_bits :: Integer -> Int
 get_num_bits n = if n == 0 then 0 else 1 + (get_num_bits (div n 2))
+
+-- Turn any integer into the nearest greater odd integer
+oddify :: Integer -> Integer
+oddify x = if x `mod` 2 == 1 then x else x+1
