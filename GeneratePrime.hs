@@ -8,7 +8,10 @@ import qualified Encoder as Enc
 import qualified Random as Rnd
 
 dispatch :: [(String, [String] ->IO())]
-dispatch = [ ("pqprime", pqprime), ("prime", prime), ("int", generate_int) ]
+dispatch = [ ("pqprime", pqprime),
+             ("prime", prime),
+             ("nbitint", nbitint),
+             ("int", genint) ]
 
 start = do
     (command:args) <- getArgs
@@ -17,7 +20,8 @@ start = do
 
 print_usage :: IOError -> IO()
 print_usage err = do
-    putStrLn "\tint n    \t- generate an n-bit integer"
+    putStrLn "\tnbitint n\t- generate a random n-bit integer"
+    putStrLn "\tint n    \t- generate a random integer less than n"
     putStrLn "\tprime n  \t- generate a random n-bit prime"
     putStrLn "\tpqprime n\t- generate two random primes p, q such that p is n-bit and p=2q+1"
 
@@ -38,8 +42,14 @@ prime [num_bits] = do
     else
         putStrLn (show (fromJust p))
 
-generate_int :: [String] -> IO()
-generate_int [num_bits] = do
-    x <- Rnd.random_int (read num_bits)
+nbitint :: [String] -> IO()
+nbitint [num_bits] = do
+    x <- Rnd.random_nbit_int (read num_bits)
     putStrLn $ show x
+
+genint :: [String] -> IO()
+genint [n] = do
+    x <- Rnd.random_int (read n)
+    putStrLn $ show x
+
 
