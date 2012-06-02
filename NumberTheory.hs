@@ -5,6 +5,7 @@ module NumberTheory
 ,rabin_miller
 ,fast_pow
 ,get_num_bits
+,next_nbit_prime
 ) where
 
 -- Fast powering modulo n for integers
@@ -66,6 +67,26 @@ next_primeh n = let k = 100
                in if rabin_miller n k then n else next_prime (n+2)
 
 next_prime n = next_primeh $ oddify n
+
+{-
+  Search for an n-bit prime and give up if we can't find one
+-}
+
+-- pre-condition: n is odd
+next_nbit_primeh n bits =
+    let k = 100
+        b = get_num_bits n
+    in
+        if b > bits then
+            Nothing
+        else
+            if rabin_miller n k then
+                Just n
+            else
+                next_nbit_primeh (n+2) bits
+
+next_nbit_prime :: Integer -> Int -> Maybe Integer
+next_nbit_prime n bits = next_nbit_primeh (oddify n) bits
 
 {-
   We will also need the (quite common) primes of the form p=2q+1 where q
