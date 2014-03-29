@@ -1,3 +1,4 @@
+
 This project is some kind of study of haskell and cryptography.
 The goal is to make a program that can securely encrypt trafic
 on a TCP/IP based super-simple chat.
@@ -33,3 +34,12 @@ When sending a chat message, it is first converted to a list of
 integers. Then random numbers are taked from the buffer and
 XORed with the message integers, hence using a one-time-pad
 scheme for the actual message encryption.
+
+
+DISCLAIMER
+
+This software should only be used for educational purposes.
+I am not a security expert, and the software may not be
+secure at all due to bugs in the protocol or the implemenation.
+In fact the protocl is vulnerable to a man-in-the-middle
+attack. So don't use it for real secrets :)
