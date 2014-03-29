@@ -2,3 +2,34 @@ This project is some kind of study of haskell and cryptography.
 The goal is to make a program that can securely encrypt trafic
 on a TCP/IP based super-simple chat.
 
+Typically an encrypted communication channel is established by
+an exchange of keys using a public key cryptography algorithm;
+the exchange keys are then used in a symmetric key encryption
+scheme. This approach is natural since the public key encryption
+schemes are compute-intensive whereas symmetric key encryption
+is quite efficient.
+
+I have chosen another path in the design of this project: All
+encryption is performed using ElGamal public key encryption,
+which is based on the difficulty of the discrete logarithm
+problem. Some of the reasons behind that descision are
+
+  1) It simplifies the code
+  2) A chat doesn't need to send a lot of data anyway
+  3) The employed encryption scheme is based on a single
+     intractable mathematical problem rather than on multiple
+     principles of encryption
+  4) I don't think the shuffling algorithms used for state of
+     the art symmetric key encryption are beautiful.
+     
+The basic design idea is to let two clients establish a TCP
+connection between them, and send chat messages back and forth
+encrypted with a one-time-pad. The one-time-pad key data is
+transferred using ElGamal.
+
+Each client generates random numbers and sends them over to the
+other client using ElGamal. There they are stored in a buffer.
+When sending a chat message, it is first converted to a list of
+integers. Then random numbers are taked from the buffer and
+XORed with the message integers, hence using a one-time-pad
+scheme for the actual message encryption.
