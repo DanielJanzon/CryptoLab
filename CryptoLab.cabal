@@ -18,24 +18,24 @@ cabal-version:       >=1.8
 executable CryptoLab
   main-is:        ElGamalMain.hs     
   other-modules:  ElGamal NumberTheory Encoder Random
-  build-depends:  base ==4.3.*, haskell98 ==1.1.*, bytestring ==0.9.*
+  build-depends:  base >=4.3, bytestring >=0.9
   extensions:     DoAndIfThenElse
 
 executable GeneratePrime
   main-is:        GeneratePrime.hs     
   other-modules:  NumberTheory Encoder Random
-  build-depends:  base ==4.3.*, haskell98 ==1.1.*, bytestring ==0.9.*
+  build-depends:  base >=4.3, bytestring >=0.9
   extensions:     DoAndIfThenElse
 
 executable TestEncoder
   main-is:        TestEncoder.hs     
   other-modules:  Encoder
-  build-depends:  base ==4.3.*, haskell98 ==1.1.*, bytestring ==0.9.*
+  build-depends:  base >=4.3, bytestring >=0.9
   extensions:     DoAndIfThenElse
 
 executable TestDecoder
   main-is:        TestDecoder.hs     
   other-modules:  Encoder
-  build-depends:  base ==4.3.*, haskell98 ==1.1.*, bytestring ==0.9.*
+  build-depends:  base >=4.3, bytestring >=0.9
   extensions:     DoAndIfThenElse
 
