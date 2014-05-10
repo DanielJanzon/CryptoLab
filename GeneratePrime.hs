@@ -1,7 +1,8 @@
 module Main where
 
 import System.Environment
-import Maybe 
+import Control.Exception
+import qualified Data.Maybe as Maybe
 import qualified Data.ByteString.Lazy as BSL
 import qualified NumberTheory as NT
 import qualified Encoder as Enc
@@ -40,7 +41,7 @@ prime [num_bits] = do
     if p == Nothing then
         putStrLn "search failed, try again"
     else
-        putStrLn (show (fromJust p))
+        putStrLn (show (Maybe.fromJust p))
 
 nbitint :: [String] -> IO()
 nbitint [num_bits] = do

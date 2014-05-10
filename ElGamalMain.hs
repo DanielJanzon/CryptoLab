@@ -2,7 +2,8 @@ module Main where
 
 import System.IO
 import System.Environment
-import Maybe
+import Control.Exception
+import qualified Data.Maybe as Maybe
 import qualified CyclicGroup as CG
 import qualified ElGamal as EG
 import qualified Encoder as Enc
