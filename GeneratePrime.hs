@@ -36,7 +36,7 @@ pqprime [num_bits] = do
 
 prime :: [String] -> IO()
 prime [num_bits] = do
-    start <- Rnd.random_int (read num_bits)
+    start <- Rnd.random_int $ 2^(read num_bits)
     let p = NT.next_nbit_prime start (read num_bits)
     if p == Nothing then
         putStrLn "search failed, try again"
