@@ -34,6 +34,26 @@ integers. Then random numbers are taked from the buffer and
 XORed with the message integers, hence using a one-time-pad
 scheme for the actual message encryption.
 
+## Running the prototype chat
+
+Build the `Chat` executable with cabal or stack and start one peer in
+server mode:
+
+```
+cabal run Chat -- server <port> <order> <generator> <private-key>
+```
+
+Start the second peer in client mode pointing it at the first:
+
+```
+cabal run Chat -- client <host> <port> <order> <generator> <private-key>
+```
+
+Both peers must agree on the group order and generator. Each private key
+is converted into a public key during the handshake, and the peers
+exchange encrypted pad material to maintain the one-time pad buffers for
+message exchange.
+
 
 DISCLAIMER
 
